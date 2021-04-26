@@ -75,6 +75,7 @@ export default {
           correctlyAnsweredQuestions: 0,
         };
       }
+      
     },
 
     correctAnswers: function () {
@@ -120,7 +121,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["setUserAnswer","setDisplayQuestions"]),
+    ...mapMutations(["setUserAnswer","setDisplayQuestions","setScore"]),
     getQuestions: async function () {
       let quiz = [];
       await fetch(
@@ -177,7 +178,6 @@ export default {
     },
     checkAnswer: function (event, index) {
       let question = this.questions[index];
-
       if (question.userAnswer) {
         if (this.index < this.questions.length - 1) {
           setTimeout(
@@ -192,10 +192,12 @@ export default {
           event.target.classList.add("rightAnswer");
           /* Set rightAnswer on question to true, computed property can track a streak out of 10 questions */
           this.questions[index].rightAnswer = true;
+          this.setScore((this.score)+1)
         } else {
           /* Mark users answer as wrong answer */
           event.target.classList.add("wrongAnswer");
           this.questions[index].rightAnswer = false;
+
           /* Show right Answer */
           //   let correctAnswer = this.questions[index].correct_answer;
           //   let allButtons = document.querySelectorAll(`[index="${index}"]`);

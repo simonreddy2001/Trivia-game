@@ -14,10 +14,15 @@ export default new Vuex.Store({
               type: null,},
         userAnswers: [],
         displayQuestions: [],
-        step: 0,
         score: 0,
         error: "",
         routerError: "",
+        quizKey: 0,
+      quizScore: {
+        allQuestions: 0,
+        answeredQuestions: 0,
+        correctlyAnsweredQuestions: 0,
+      },
     },
     mutations: {
         setDifficulty: (state, payload) => {
@@ -41,9 +46,9 @@ export default new Vuex.Store({
         setQuestions: (state, payload) => {
             state.questions = payload;
         },
-        resetUserAnswers: (state) => {
-            state.userAnswers = [];
-        },
+        // resetUserAnswers: (state) => {
+        //     state.userAnswers = [];
+        // },
         setUserAnswer: (state, payload) => {
             state.userAnswers.push(payload);
         },
