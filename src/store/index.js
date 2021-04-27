@@ -79,18 +79,18 @@ export default new Vuex.Store({
                 commit("setError", e.message);
             }
         },
-        calculateScore ({commit, state}){
-            const score = state.questions.reduce(
-                (count, currentQuestion) => {
-                  if (currentQuestion.correct_answer) {
-                    count++;
-                  }
-                  return count;
-                },
-                0
-              )
-              commit("setScore", score)
-        },
+        // calculateScore ({commit, state}){
+        //     const score = state.questions.reduce(
+        //         (count, currentQuestion) => {
+        //           if (currentQuestion.rightAnswer) {
+        //             count++;
+        //           }
+        //           return count;
+        //         },
+        //         0
+        //       )
+        //       commit("setScore", score)
+        // },
         async fetchCategories({ commit }) {
             try {
                 const categories = await fetch('https://opentdb.com/api_category.php')

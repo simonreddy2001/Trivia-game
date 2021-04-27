@@ -31,7 +31,7 @@
 import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: "Quiz",
+  name: "Games",
   data() {
     return {
       questions: [],
@@ -58,6 +58,7 @@ export default {
           }
         });
         return streakCounter;
+
       } else {
         return "--";
       }
@@ -151,13 +152,9 @@ export default {
           );
         }
         if (question.userAnswer === question.correct_answer) {
-          /* Set class on Button if user answered right, to celebrate right answer with animation joyfulButton */
-          event.target.classList.add("rightAnswer");
-          /* Set rightAnswer on question to true, computed property can track a streak out of 10 questions */
           this.questions[index].rightAnswer = true;
+          this.setScore((this.score)+1)
         } else {
-          /* Mark users answer as wrong answer */
-          event.target.classList.add("wrongAnswer");
           this.questions[index].rightAnswer = false;
         }
       }
