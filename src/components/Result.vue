@@ -1,6 +1,8 @@
 <template>
   <div class="game-box">
     <div class="quiz-container">
+      <h1 id="logo-headline">Trivia-Game</h1>
+      <p>Amazing -- {{ inputs.userName }}</p>
       <div class="quiz-top">
         <h3>Congratulations! You've completed your Quiz!</h3>
       </div>
@@ -21,11 +23,12 @@
             </table>
           </div>
         </div>
+        </div>
         <div class="quiz-bottom">
           <button @click="playNewGame">Wanna Try A New Game</button>
           <button @click="playSameGame">Reset Game With Same Options</button>
         </div>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -66,4 +69,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
