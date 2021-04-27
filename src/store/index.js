@@ -12,17 +12,13 @@ export default new Vuex.Store({
               category: null,
               difficulty: null,
               type: null,},
-        userAnswers: [],
-        displayQuestions: [],
+        displayQuestions: null,
         score: 0,
         error: "",
         routerError: "",
-        quizKey: 0,
-      quizScore: {
         allQuestions: 0,
         answeredQuestions: 0,
         correctlyAnsweredQuestions: 0,
-      },
     },
     mutations: {
         setDifficulty: (state, payload) => {
@@ -46,14 +42,8 @@ export default new Vuex.Store({
         setQuestions: (state, payload) => {
             state.questions = payload;
         },
-        // resetUserAnswers: (state) => {
-        //     state.userAnswers = [];
-        // },
-        setUserAnswer: (state, payload) => {
-            state.userAnswers.push(payload);
-        },
         setDisplayQuestions: (state, payload) => {
-            state.displayQuestions.push(payload);
+            state.displayQuestions= payload;
         },
         setScore: (state, payload) => {
             state.score = payload;
@@ -65,9 +55,7 @@ export default new Vuex.Store({
             state.routerError = payload;
         },
     },
-    getters: {
-    
-    },
+   
     actions: {
         async fetchQuestions({ commit, state }, router) {
             const { inputs } = state;
@@ -90,6 +78,18 @@ export default new Vuex.Store({
             } catch (e) {
                 commit("setError", e.message);
             }
+        },
+        calculateScore ({commit, state}){
+            const score = state.questions.reduce(
+                (count, currentQuestion) => {
+                  if (currentQuestion.correct_answer) {
+                    count++;
+                  }
+                  return count;
+                },
+                0
+              )
+              commit("setScore", score)
         },
         async fetchCategories({ commit }) {
             try {

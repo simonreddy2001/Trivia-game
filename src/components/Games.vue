@@ -41,43 +41,12 @@ export default {
   props: {},
   computed: {
     ...mapState(["inputs"]),
-
     currentQuestion: function () {
       if (this.questions !== []) {
         return this.questions[this.index];
       }
       return null;
     },
-    score: function () {
-      if (this.questions !== []) {
-        return {
-          allQuestions: this.questions.length,
-          answeredQuestions: this.questions.reduce((count, currentQuestion) => {
-            if (currentQuestion.userAnswer) {
-              count++;
-            }
-            return count;
-          }, 0),
-          correctlyAnsweredQuestions: this.questions.reduce(
-            (count, currentQuestion) => {
-              if (currentQuestion.rightAnswer) {
-                count++;
-              }
-              return count;
-            },
-            0
-          ),
-        };
-      } else {
-        return {
-          allQuestions: 0,
-          answeredQuestions: 0,
-          correctlyAnsweredQuestions: 0,
-        };
-      }
-      
-    },
-
     correctAnswers: function () {
       if (this.questions && this.questions.length > 0) {
         let streakCounter = 0;
@@ -112,16 +81,19 @@ export default {
     quizCompleted: function (completed) {
       completed &&
         setTimeout(() => {
-          this.$emit("quiz-completed", this.score);
+          this.$emit("quiz-completed");
         }, 1000);
       if (!this.error) {
         this.$router.push("/result");
-        this.showResult = true;
+        
       }
     },
   },
   methods: {
-    ...mapMutations(["setUserAnswer","setDisplayQuestions","setScore"]),
+    ...mapMutations([
+      "setDisplayQuestions",
+      "setScore",
+    ]),
     getQuestions: async function () {
       let quiz = [];
       await fetch(
@@ -151,9 +123,9 @@ export default {
           quiz = jsonResponse.results;
         });
       this.questions = quiz;
-      this.setDisplayQuestions(this.questions)
+      this.setDisplayQuestions(this.questions);
     },
-    handleButtonClick: function (event, answer) {
+    handleButtonClick: function (event) {
       /* Find index to identiy question object in data */
       let index = event.target.getAttribute("index");
       let pollutedUserAnswer = event.target.innerHTML; // innerHTML is polluted with decoded HTML entities e.g ' from &#039;
@@ -162,7 +134,6 @@ export default {
 
       /* Set userAnswer on question object in data */
       this.questions[index].userAnswer = userAnswer;
-      this.setUserAnswer(answer);
       /* Set class "clicked" on button with userAnswer -> for CSS Styles; Disable other sibling buttons */
       event.target.classList.add("clicked");
       let allButtons = document.querySelectorAll(`[index="${index}"]`);
@@ -172,7 +143,6 @@ export default {
 
         allButtons[i].setAttribute("disabled", "");
       }
-
       /* Invoke checkAnswer to check Answer */
       this.checkAnswer(event, index);
     },
@@ -192,20 +162,11 @@ export default {
           event.target.classList.add("rightAnswer");
           /* Set rightAnswer on question to true, computed property can track a streak out of 10 questions */
           this.questions[index].rightAnswer = true;
-          this.setScore((this.score)+1)
         } else {
           /* Mark users answer as wrong answer */
           event.target.classList.add("wrongAnswer");
           this.questions[index].rightAnswer = false;
 
-          /* Show right Answer */
-          //   let correctAnswer = this.questions[index].correct_answer;
-          //   let allButtons = document.querySelectorAll(`[index="${index}"]`);
-          //   allButtons.forEach(function(button) {
-          //     if (button.innerHTML === correctAnswer) {
-          //       button.classList.add("showRightAnswer");
-          //     }
-          //   });
         }
       }
     },
