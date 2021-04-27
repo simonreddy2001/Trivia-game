@@ -7,11 +7,12 @@ export default new Vuex.Store({
         categories: [],
         questions: null,
         inputs: {
-              userName: "",
-              noOfQ: null,
-              category: null,
-              difficulty: null,
-              type: null,},
+            userName: "",
+            noOfQ: null,
+            category: null,
+            difficulty: null,
+            type: null,
+        },
         displayQuestions: null,
         score: 0,
         error: "",
@@ -43,7 +44,7 @@ export default new Vuex.Store({
             state.questions = payload;
         },
         setDisplayQuestions: (state, payload) => {
-            state.displayQuestions= payload;
+            state.displayQuestions = payload;
         },
         setScore: (state, payload) => {
             state.score = payload;
@@ -55,7 +56,7 @@ export default new Vuex.Store({
             state.routerError = payload;
         },
     },
-   
+
     actions: {
         async fetchQuestions({ commit, state }, router) {
             const { inputs } = state;
@@ -65,7 +66,7 @@ export default new Vuex.Store({
                 )
                     .then(response => response.json())
                     .then(data => data.results);
-        
+
                 if (questions.length) {
                     commit("setQuestions", questions)
                     router.push("/games");
@@ -94,14 +95,12 @@ export default new Vuex.Store({
         async fetchCategories({ commit }) {
             try {
                 const categories = await fetch('https://opentdb.com/api_category.php')
-                .then(response => response.json())
-                .then(data => data.trivia_categories);
+                    .then(response => response.json())
+                    .then(data => data.trivia_categories);
                 commit("setCategories", categories);
             } catch (e) {
                 commit("setError", e.message);
             }
         },
     },
-    
-
 });

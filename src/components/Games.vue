@@ -1,7 +1,7 @@
 <template>
   <div class="game-box">
     <div class="quiz-container">
-      <h1 id="logo-headline">Trivia-Game</h1>
+      <h1>Trivia-Game</h1>
       <p>All the best -- {{ inputs.userName }}</p>
 
       <div class="quiz-top">
@@ -167,44 +167,11 @@ export default {
 </script>
 
 <style scoped>
-#quiz-container {
-  margin: 1rem auto;
-  padding: 1rem;
-  max-width: 750px;
-}
-
-.centerText {
-  text-align: center;
-}
-
 .divider {
   margin: 0.5rem 0;
   border: 3px solid rgba(102, 255, 166, 0.7);
   border-radius: 2px;
   box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.3);
-}
-
-#logo-headline {
-  font-size: 3rem;
-  padding: 0.5rem;
-  color: #f50057;
-  text-align: center;
-}
-
-#logo-crown {
-  display: block;
-  width: 40%;
-  margin: 0 auto;
-}
-
-@media only screen and (max-width: 500px) {
-  #logo-crown {
-    width: 30%;
-  }
-
-  #logo-headline {
-    font-size: 1.8rem;
-  }
 }
 
 h1 {

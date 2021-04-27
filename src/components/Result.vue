@@ -1,7 +1,7 @@
 <template>
   <div class="game-box">
     <div class="quiz-container">
-      <h1 id="logo-headline">Trivia-Game</h1>
+      <h1>Trivia-Game</h1>
       <p>Amazing -- {{ inputs.userName }}</p>
       <div class="quiz-top">
         <h3>Congratulations! You've completed your Quiz!</h3>
@@ -40,17 +40,15 @@ export default {
   name: "Result",
   computed: {
     ...mapState([
-      "userAnswers",
       "questions",
       "inputs",
       "score",
       "displayQuestions",
-      "resetUserAnswers",
-      "correctAnswers",
     ]),
   },
   data() {
-    return {};
+    return {
+    };
   },
   methods: {
     ...mapActions(["calculateScore"]),
