@@ -2,11 +2,9 @@
   <div class="game-box">
     <div class="quiz-container">
       <div class="quiz-top">
-        <h1></h1>
-        <br />
         <h3>Congratulations! You've completed your Quiz!</h3>
       </div>
-      <div class="quiz-middle" id="score">
+      <div class="quiz-middle">
         <h1>You scored {{ score * 10 }} out of {{ inputs.noOfQ * 10 }}.</h1>
         <div v-for="(question, index) in displayQuestions" :key="index">
           <p v-html="question.question" />
@@ -62,6 +60,7 @@ export default {
     created() {
       this.calculateScore();
     },
+
   },
 };
 </script>

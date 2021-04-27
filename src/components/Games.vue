@@ -62,9 +62,6 @@ export default {
         return "--";
       }
     },
-    pluralizeAnswer: function () {
-      return this.correctAnswers === 1 ? "Answer" : "Answers";
-    },
     quizCompleted: function () {
       if (this.questions.length === 0) {
         return false;
@@ -85,15 +82,11 @@ export default {
         }, 1000);
       if (!this.error) {
         this.$router.push("/result");
-        
       }
     },
   },
   methods: {
-    ...mapMutations([
-      "setDisplayQuestions",
-      "setScore",
-    ]),
+    ...mapMutations(["setDisplayQuestions", "setScore"]),
     getQuestions: async function () {
       let quiz = [];
       await fetch(
@@ -166,7 +159,6 @@ export default {
           /* Mark users answer as wrong answer */
           event.target.classList.add("wrongAnswer");
           this.questions[index].rightAnswer = false;
-
         }
       }
     },
